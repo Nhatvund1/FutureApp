@@ -20,7 +20,7 @@
             android:layout_marginTop="32dp"
             android:fontFamily="@font/yeonsung_regular"
             android:text="Thông báo"
-            android:textColor="@color/textCollor"
+            android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

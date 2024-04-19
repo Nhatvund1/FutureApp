@@ -239,4 +239,5 @@
         android:textAllCaps="false"
         android:textColor="@color/textCollor" />
 
+
 </FrameLayout>

@@ -2,6 +2,7 @@ package com.example.foodapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.foodapp.databinding.ActivityPayOutBinding
 import com.example.foodapp.model.OrderDetails
@@ -96,7 +97,6 @@ import com.google.firebase.database.ValueEventListener
             )
             val orderReference = databaseReference.child("OrderDetails").child(itemPushKey!!)
             orderReference.setValue(orderDetails).addOnSuccessListener {
-
                 removeItemFromCart()
                 addOrderToHistory(orderDetails)
             }

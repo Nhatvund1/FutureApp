@@ -52,6 +52,7 @@ class OrderDetails() : Serializable {
         this.userName = name
         this.foodNames = foodItemName
         this.foodPrices = foodItemPrice
+        this.foodImages = foodItemImage
         this.foodQuantities = foodItemQuantities
         this.address = address
         this.totalPrice = totalAmount
@@ -62,7 +63,8 @@ class OrderDetails() : Serializable {
         this.paymentReceived = paymentReceived
 
 
-}
+    }
+
 
    fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(userUid)

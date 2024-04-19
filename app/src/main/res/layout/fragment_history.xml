@@ -78,17 +78,30 @@
                     app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/oderedStarus"
+                    android:id="@+id/orderedStarus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="32dp"
-                    app:cardBackgroundColor="#4CAF50"
+                    android:layout_marginEnd="40dp"
+                    app:cardBackgroundColor="#9AA19A"
                     app:cardCornerRadius="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/receiveButton"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
-                </androidx.cardview.widget.CardView>
+                <Button
+                    android:id="@+id/receiveButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:backgroundTint="@color/textCollor"
+                    android:text="Đã nhận"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/orderedStarus"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/orderedStarus"
+                    app:layout_constraintTop_toBottomOf="@+id/orderedStarus" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -108,7 +121,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/BuyAgainRecyclerView"
+            android:id="@+id/buyAgainRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -121,5 +134,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textView31"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/buy_again_item" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -16,10 +16,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/yeonsung_regular"
-            android:text="Xin chúc mừng\n bạn đã đặt hàng"
+            android:text="Xin chúc mừng\n bạn đã đặt hàng thành công"
             android:textAlignment="center"
-            android:textColor="@color/textCollor"
-            android:textSize="34dp" />
+            android:textColor="@color/greenCollor"
+            android:textSize="30dp" />
 
         <ImageView
             android:id="@+id/imageView8"

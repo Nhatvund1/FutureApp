@@ -1,15 +1,16 @@
 package com.example.foodapp.Fragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.foodapp.R
 import com.example.foodapp.adaptar.BuyAgainAdapter
 import com.example.foodapp.databinding.FragmentHistoryBinding
 import com.example.foodapp.model.OrderDetails
@@ -28,7 +29,7 @@ class HistoryFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
     private lateinit var userId: String
-    private var listOfOrderItem: MutableList<OrderDetails> = mutableListOf()
+    private var listOfOrderItem: ArrayList<OrderDetails> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,33 +40,43 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHistoryBinding.inflate(layoutInflater, container, false)
-        // Inflate the layout for this fragment
-        // initialize  firebase Auth
+        // Tăng cường bố cục cho đoạn này
+        // Khởi tạo xác thực firebase
         auth = FirebaseAuth.getInstance()
         // initialize  firebase database
 
         database = FirebaseDatabase.getInstance()
         // Truy xuất và hiển thị người dùng
-        retrieveBuyHistory()
-        // recent buy Button Click
 
+        // Bấm vào nút mua gần đây
+        retrieveBuyHistory()
         binding.recentbuyitem.setOnClickListener {
             seeItemsRecentBuy()
         }
-        // setupRecyclerView()
+
+        binding.receiveButton.setOnClickListener {
+            updateOrderStatus()
+        }
+//         setupRecyclerView()
         return binding.root
     }
 
-    // function to see items recent buy
+    private fun updateOrderStatus() {
+        val itemPushKey = listOfOrderItem[0].itemPushKey
+        val completeOrderReference = database.reference.child("CompleteOrder").child(itemPushKey!!)
+        completeOrderReference.child("paymentReceived").setValue(true)
+    }
+
+    //    Chức năng xem các mặt hàng đã mua gần đây
     private fun seeItemsRecentBuy() {
         listOfOrderItem.firstOrNull()?.let { recentBuy ->
             val intent = Intent(requireContext(), recentOrderItems::class.java)
-            intent.putExtra("RecentBuyOrderItem", recentBuy)// Fix recentBuy -> listOfOrderItem
+            intent.putExtra("RecentBuyOrderItem", listOfOrderItem)
             startActivity(intent)
         }
     }
 
-    // function to retrieve see items  buy history
+    // Hàm truy xuất xem lịch sử mua hàng
     private fun retrieveBuyHistory() {
         binding.recentbuyitem.visibility = View.INVISIBLE
         // Lấy ID của người dùng hiện tại
@@ -82,25 +93,25 @@ class HistoryFragment : Fragment() {
                         listOfOrderItem.add(it)
                     }
                 }
-
+//
                 listOfOrderItem.reverse()
                 if (listOfOrderItem.isNotEmpty()) {
-                    // display the most recent order details
+//                    // hiển thị chi tiết đơn hàng gần đây nhất
                     setDataInRecentBuyItem()
                     setPreviousBuyItemRecyclerView()
-                    // setup to recyclerview with previous order details
+//                    // thiết lập Recyclerview với chi tiết đơn hàng trước đó
                 }
             }
 
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
 
     }
 
-    // function to  display the most recent order details
+    // hàm hiển thị chi tiết đơn hàng gần đây nhất
     private fun setDataInRecentBuyItem() {
         binding.recentbuyitem.visibility = View.VISIBLE
         val recentOderItem = listOfOrderItem.firstOrNull()
@@ -111,18 +122,23 @@ class HistoryFragment : Fragment() {
                 val image = it.foodImages?.firstOrNull() ?: ""
                 val uri = Uri.parse(image)
                 Glide.with(requireContext()).load(uri).into(buyAgainFoodImage)
-                // Hiển thị nút recentbuyitem
-
                 listOfOrderItem.reverse()
-                if(listOfOrderItem.isNotEmpty()){
+                if (listOfOrderItem.isNotEmpty()) {
 
+                }
+//                 Hiển thị nút recentbuyitem
+                val isOrderIsAccepted = listOfOrderItem[0].orderAccepted
+                Log.d("TAG", "setDataInRecentBuyItem: $isOrderIsAccepted ")
+                if (isOrderIsAccepted) {
+                    orderedStarus.background.setTint(Color.GREEN)
+                    receiveButton.visibility = View.VISIBLE
                 }
 
             }
         }
     }
 
-    // function to setup  recyclerview with previous order details
+    // hàm thiết lập Recyclerview với chi tiết đơn hàng trước đó
     private fun setPreviousBuyItemRecyclerView() {
         val buyAgainFoodName = mutableListOf<String>()
         val buyAgainFoodPrice = mutableListOf<String>()
@@ -138,7 +154,7 @@ class HistoryFragment : Fragment() {
                     }
                 }
                 // Thiết lập RecyclerView một lần ngoài vòng lặp
-                val rv = binding.BuyAgainRecyclerView
+                val rv = binding.buyAgainRecyclerView
                 rv.layoutManager = LinearLayoutManager(requireContext())
                 buyAgainAdapter = BuyAgainAdapter(
                     buyAgainFoodName,

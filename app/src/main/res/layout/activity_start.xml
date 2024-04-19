@@ -25,7 +25,7 @@
         android:fontFamily="@font/yeonsung_regular"
         android:text="Thưởng thức những bữa ăn chất lượng\n tại nhà "
         android:textAlignment="center"
-        android:textColor="@color/textCollor"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.493"

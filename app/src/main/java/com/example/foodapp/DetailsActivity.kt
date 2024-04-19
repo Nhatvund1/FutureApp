@@ -57,9 +57,9 @@ class DetailsActivity : AppCompatActivity() {
 
         // lưu dữ liệu vào giỏ hàng vào cơ sở dữ liệu firebase
         database.child("user").child(userId).child("CartItems").push().setValue(cartItem).addOnSuccessListener {
-            Toast.makeText(this , "Items added into cart successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this , "Các mặt hàng được thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener{
-            Toast.makeText(this, "Item Not added", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Mục chưa được thêm", Toast.LENGTH_SHORT).show()
         }
 
     }
